@@ -42,9 +42,11 @@ class MessagesController < ApplicationController
       if @message.update(message_params)
         format.html { redirect_to @message, notice: 'Message was successfully updated.' }
         format.json { render :show, status: :ok, location: @message }
+        format.js { render :update}
       else
         format.html { render :edit }
         format.json { render json: @message.errors, status: :unprocessable_entity }
+        format.js { render :update}
       end
     end
   end
