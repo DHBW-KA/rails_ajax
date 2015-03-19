@@ -3,7 +3,7 @@
     = f.label :body, :class => 'control-label'
     .controls
       = f.text_field :body, :class => 'form-control'
-    = error_span(@message[:body])
+    = f.error_span(:body)
   = f.submit nil, :class => 'btn btn-primary'
   '
   = link_to t('.cancel', :default => t("helpers.links.cancel")), messages_path, :class => 'btn'
