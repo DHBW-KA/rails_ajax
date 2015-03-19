@@ -4,5 +4,4 @@
   input.after "<span class=\"help-block\"><%= @message.errors[:body].join '<br />' %></span>"
 <% else %>
   $('#modal').modal('hide')
-  $('tr[data-id="<%=@message.id %>"]').replaceWith $('<%=j render @message %>')
 <% end %>

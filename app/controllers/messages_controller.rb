@@ -1,5 +1,6 @@
 class MessagesController < ApplicationController
   before_action :set_message, only: [:show, :edit, :update, :destroy]
+  enable_sync only: [:create, :update, :destroy]
 
   # GET /messages
   # GET /messages.json
@@ -24,13 +25,13 @@ class MessagesController < ApplicationController
 
     respond_to do |format|
       if @message.save
-        format.html { redirect_to @message, notice: 'Message was successfully created.' }
+        format.html { redirect_to messages_url, notice: 'Message was successfully created.' }
         format.json { render :show, status: :created, location: @message }
         format.js { render :create, status: :created}
       else
         format.html { render :new }
         format.json { render json: @message.errors, status: :unprocessable_entity }
-        format.js { render :create, status: :created}
+        format.js { render :create}
       end
     end
   end
@@ -40,7 +41,7 @@ class MessagesController < ApplicationController
   def update
     respond_to do |format|
       if @message.update(message_params)
-        format.html { redirect_to @message, notice: 'Message was successfully updated.' }
+        format.html { redirect_to messages_url, notice: 'Message was successfully updated.' }
         format.json { render :show, status: :ok, location: @message }
         format.js { render :update}
       else

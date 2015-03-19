@@ -9,8 +9,8 @@ table class="table table-striped"
       th= model_class.human_attribute_name(:created_at)
       th=t '.actions', :default => t("helpers.actions")
   tbody
-    - @messages.each do |message|
-      = render message
+    = sync partial: 'message', collection: @messages
+    = sync_new partial: 'message', resource: Message.new, direction: :append
     tr
       td(colspan="4")= render partial: 'form'
 
