@@ -1,12 +1,9 @@
-= form_for @message do |f|
-  - if @message.errors.any?
-    #error_explanation
-      h2 = "#{pluralize(@message.errors.count, "error")} prohibited this message from being saved:"
-      ul
-        - @message.errors.full_messages.each do |message|
-          li = message
-
-  .field
-    = f.label :body
-    = f.text_field :body
-  .actions = f.submit
+= form_for @message, html: { class: "form form-horizontal message" } do |f|
+  .form-group
+    = f.label :body, :class => 'control-label'
+    .controls
+      = f.text_field :body, :class => 'form-control'
+    = error_span(@message[:body])
+  = f.submit nil, :class => 'btn btn-primary'
+  '
+  = link_to t('.cancel', :default => t("helpers.links.cancel")), messages_path, :class => 'btn'
