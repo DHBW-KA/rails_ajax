@@ -35,6 +35,10 @@ gem 'slim-rails'
 
 gem 'twitter-bootstrap-rails'
 
+gem 'faye'
+gem 'thin', require: false
+gem 'sync'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
