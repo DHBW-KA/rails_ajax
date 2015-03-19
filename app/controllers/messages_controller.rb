@@ -26,11 +26,11 @@ class MessagesController < ApplicationController
       if @message.save
         format.html { redirect_to @message, notice: 'Message was successfully created.' }
         format.json { render :show, status: :created, location: @message }
-        format.js { render :show, status: :created}
+        format.js { render :create, status: :created}
       else
         format.html { render :new }
         format.json { render json: @message.errors, status: :unprocessable_entity }
-        format.js { render :show, status: :created}
+        format.js { render :create, status: :created}
       end
     end
   end
