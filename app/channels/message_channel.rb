@@ -11,7 +11,13 @@ class MessageChannel < ApplicationCable::Channel
 
   def create data
     @message = Message.create body: data["msg"]
-    ActionCable.server.broadcast CHANNEL_KEY, msg: render_message
+    ActionCable.server.broadcast CHANNEL_KEY, action: "create", msg: render_message
+  end
+
+  def delete data
+    @message = Message.find(data["id"])
+    @message.destroy
+    ActionCable.server.broadcast CHANNEL_KEY, action: "delete", id: @message.id
   end
 
   private
