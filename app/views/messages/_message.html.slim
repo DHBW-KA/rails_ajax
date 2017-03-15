@@ -1,5 +1,5 @@
-tr
+tr data-id=message.id
   td = message.body
   td = link_to 'Show', message
   td = link_to 'Edit', edit_message_path(message)
-  td = link_to 'Destroy', message, data: { confirm: 'Are you sure?' }, method: :delete
+  td = link_to 'Destroy', message, method: :delete, remote: true
