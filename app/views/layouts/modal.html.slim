@@ -1,0 +1,10 @@
+#modal.modal
+  .modal-content
+    h4 = content_for?(:title) ? yield(:title) : 'Modal'
+    = yield
+  .modal-footer
+    - if content_for?(:footer)
+      = yield(:footer)
+    - else
+      a.modal-action.modal-close.waves-effect.waves-green.btn-flat href="#!" Close
+
