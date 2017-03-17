@@ -3,25 +3,39 @@ class MessageChannel < ApplicationCable::Channel
 
   def subscribed
     stream_from CHANNEL_KEY
+    ActionCable.server.broadcast CHANNEL_KEY, action: "list", messages: render_messages
   end
-
   def unsubscribed
     # Any cleanup needed when channel is unsubscribed
   end
 
   def create data
-    @message = Message.create body: data["msg"]
-    ActionCable.server.broadcast CHANNEL_KEY, action: "create", msg: render_message
+    @message = Message.create body: data["msg"], ip: user_ip
+    ActionCable.server.broadcast CHANNEL_KEY, action: "create", body: render_message
   end
 
-  def delete data
+
+  def destroy data
     @message = Message.find(data["id"])
-    @message.destroy
-    ActionCable.server.broadcast CHANNEL_KEY, action: "delete", id: @message.id
+    if user_ip == @message.ip || user_ip == "127.0.0.1"
+      @message.destroy
+      ActionCable.server.broadcast CHANNEL_KEY, action: "destroy", id: @message.id
+    end
   end
 
   private
   def render_message
-    MessagesController.render partial: 'messages/message', locals: {message: @message}
+    MessagesController.render @message
   end
+
+  def user_ip
+    connection.env["REMOTE_ADDR"]
+  end
+
+  def render_messages
+    Message.all.map do |message|
+      MessagesController.render message
+    end
+  end
+
 end
