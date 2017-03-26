@@ -17,10 +17,8 @@ class MessageChannel < ApplicationCable::Channel
 
   def destroy data
     @message = Message.find(data["id"])
-    if user_ip == @message.ip || user_ip == "127.0.0.1"
-      @message.destroy
-      ActionCable.server.broadcast CHANNEL_KEY, action: "destroy", id: @message.id
-    end
+    @message.destroy
+    ActionCable.server.broadcast CHANNEL_KEY, action: "destroy", id: @message.id
   end
 
   private

@@ -15,15 +15,15 @@ App.message = App.cable.subscriptions.create "MessageChannel",
 
   received: (data) ->
     if data.action == "create"
-      $('table').prepend(data.msg)
+      $('table').prepend(data.body)
       $('table tbody tr:first-child').addClass("animated rubberBand")
-    else if data.action == "delete"
+    else if data.action == "destroy"
       elem = $("table tr[data-id=#{data.id}]")
       elem.addClass "animated zoomOutUp"
       setTimeout ->
         elem.remove()
       , 800
-    else if data.action == "messages"
+    else if data.action == "list"
       elem = $("table tbody tr").remove()
       $("table").prepend(msg) for msg in data.messages
 
@@ -31,4 +31,4 @@ App.message = App.cable.subscriptions.create "MessageChannel",
     @perform 'create', msg: msg
 
   delete: (id) ->
-    @perform 'delete', id: id
+    @perform 'destroy', id: id
